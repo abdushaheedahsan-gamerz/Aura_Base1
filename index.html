@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aura Base | Modern E-Commerce</title>
+    <style>
+      :root {
+        --bg: #f6f7fb;
+        --surface: #ffffff;
+        --text: #152033;
+        --muted: #627086;
+        --primary: #6c63ff;
+        --primary-dark: #5148d8;
+        --accent: #ff8d3a;
+        --border: #e7ebf3;
+        --shadow: 0 20px 40px rgba(21, 32, 51, 0.08);
+      }
+
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+        color: var(--text);
+        background: linear-gradient(180deg, #fcfdff 0%, var(--bg) 100%);
+        line-height: 1.6;
+      }
+
+      a { color: inherit; text-decoration: none; }
+      img { width: 100%; display: block; }
+
+      .announcement {
+        background: linear-gradient(90deg, var(--primary) 0%, #8f7bff 100%);
+        color: white;
+        text-align: center;
+        padding: 10px 16px;
+        font-size: 0.95rem;
+      }
+
+      .container {
+        width: min(1200px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 18px 0;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.6rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+
+      .brand-mark {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, var(--primary), #8b7cff);
+        color: white;
+        font-weight: 700;
+      }
+
+      .searchbar {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 8px 10px 8px 16px;
+        box-shadow: var(--shadow);
+      }
+
+      .searchbar input {
+        border: 0;
+        outline: 0;
+        flex: 1;
+        font-size: 0.95rem;
+        background: transparent;
+      }
+
+      .searchbar button {
+        border: 0;
+        background: var(--primary);
+        color: white;
+        font-weight: 600;
+        border-radius: 999px;
+        padding: 10px 16px;
+        cursor: pointer;
+      }
+
+      .top-actions {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        color: var(--muted);
+        font-weight: 600;
+      }
+
+      .top-actions a {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 10px;
+        border-radius: 999px;
+      }
+
+      .top-actions a:hover {
+        background: #eef2ff;
+        color: var(--primary);
+      }
+
+      nav {
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      .nav-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 12px 0;
+      }
+
+      .nav-links a {
+        padding: 8px 12px;
+        border-radius: 999px;
+        color: var(--muted);
+        font-weight: 600;
+      }
+
+      .nav-links a:hover {
+        background: #f3f5ff;
+        color: var(--primary);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.6fr 0.9fr;
+        gap: 24px;
+        padding: 24px 0 30px;
+      }
+
+      .hero-card, .panel-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .hero-card {
+        min-height: 420px;
+        position: relative;
+        background:
+          linear-gradient(90deg, rgba(21, 32, 51, 0.88) 0%, rgba(21, 32, 51, 0.25) 100%),
+          url("https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=1200&q=80") center/cover;
+      }
+
+      .hero-card-content {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 32px;
+        color: white;
+      }
+
+      .hero-card-content h1 {
+        font-size: clamp(1.7rem, 3vw, 2.6rem);
+        margin: 0 0 10px;
+        line-height: 1.1;
+      }
+
+      .hero-card-content p {
+        margin: 0 0 18px;
+        font-size: 1rem;
+        max-width: 520px;
+      }
+
+      .btn-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        padding: 12px 18px;
+        font-weight: 700;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .btn:hover { transform: translateY(-2px); }
+      .btn-primary { background: var(--accent); color: white; }
+      .btn-secondary { background: rgba(255,255,255,0.16); color: white; border: 1px solid rgba(255,255,255,0.3); }
+
+      .panel-card { padding: 22px; }
+      .panel-card h3 { margin: 0 0 12px; }
+      .offer-list { display: grid; gap: 12px; }
+      .offer-item {
+        padding: 12px;
+        border-radius: 16px;
+        background: #f8f9fe;
+        border: 1px solid var(--border);
+      }
+
+      .section { padding: 8px 0 30px; }
+      .section-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+
+      .section-head h2 { margin: 0; font-size: 1.35rem; }
+      .section-head a { color: var(--primary); font-weight: 700; }
+
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .category-card, .product-card, .testimonial-card, .feature-card, .brand-pill {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+      }
+
+      .category-card { padding: 18px; }
+      .category-icon {
+        width: 46px;
+        height: 46px;
+        display: grid;
+        place-items: center;
+        border-radius: 14px;
+        background: #f3f5ff;
+        color: var(--primary);
+        font-size: 1.2rem;
+        margin-bottom: 12px;
+      }
+
+      .category-card h3 { margin: 6px 0 6px; font-size: 1.05rem; }
+      .category-card p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+
+      .product-card { padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+      .product-card:hover { transform: translateY(-3px); transition: transform 0.2s ease; }
+      .product-card img { height: 190px; object-fit: cover; border-radius: 14px; }
+      .badge {
+        display: inline-flex;
+        align-self: flex-start;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-weight: 700;
+        background: #fff2e7;
+        color: var(--accent);
+      }
+
+      .product-title { font-weight: 700; }
+      .meta { color: var(--muted); font-size: 0.9rem; }
+      .rating { color: #f5b547; font-weight: 700; }
+      .price-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+      .price { font-size: 1.1rem; font-weight: 800; }
+      .old-price { text-decoration: line-through; color: var(--muted); }
+      .stock { font-size: 0.85rem; color: #1f9d72; font-weight: 700; }
+      .product-actions { display: flex; gap: 8px; margin-top: auto; }
+      .product-actions button {
+        border: 0;
+        border-radius: 999px;
+        padding: 9px 12px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .product-actions .cart { background: var(--primary); color: white; }
+      .product-actions .wish { background: #f3f5ff; color: var(--primary); }
+
+      .promo-banner {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 18px;
+        margin: 8px 0 30px;
+      }
+      .promo-card {
+        border-radius: 24px;
+        padding: 24px;
+        color: white;
+        background: linear-gradient(135deg, #1b2540 0%, #3d4f7a 100%);
+        box-shadow: var(--shadow);
+      }
+      .promo-card h3 { margin: 0 0 8px; font-size: 1.3rem; }
+      .promo-card p { margin: 0 0 16px; color: #dfe8ff; }
+      .promo-card .btn { background: white; color: var(--primary); }
+
+      .flash-sale {
+        background: linear-gradient(135deg, #fff6e8 0%, #ffe0bb 100%);
+        border: 1px solid #f7dbb7;
+        border-radius: 24px;
+        padding: 22px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+      }
+      .countdown { display: flex; gap: 10px; }
+      .countdown span { background: white; border-radius: 12px; padding: 10px 12px; min-width: 54px; text-align: center; }
+      .countdown small { display: block; color: var(--muted); font-size: 0.72rem; margin-top: 4px; }
+
+      .brands-row, .feature-grid, .testimonial-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+      }
+      .brand-pill {
+        padding: 16px 14px;
+        text-align: center;
+        font-weight: 700;
+        color: var(--muted);
+      }
+
+      .feature-card { padding: 18px; }
+      .feature-card h3 { margin: 10px 0 6px; }
+      .feature-card p { margin: 0; color: var(--muted); }
+      .feature-icon { font-size: 1.6rem; }
+
+      .testimonial-card { padding: 18px; }
+      .testimonial-card p { color: var(--muted); }
+      .reviewer { display: flex; align-items: center; gap: 10px; margin-top: 14px; }
+      .reviewer img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
+
+      .newsletter {
+        margin: 20px 0 36px;
+        background: linear-gradient(135deg, #161f37 0%, #2f3e6a 100%);
+        border-radius: 28px;
+        padding: 28px;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+      }
+      .newsletter form {
+        display: flex;
+        gap: 10px;
+        flex: 1;
+        max-width: 480px;
+      }
+      .newsletter input {
+        flex: 1;
+        border: 0;
+        border-radius: 999px;
+        padding: 12px 16px;
+        outline: 0;
+      }
+      .newsletter button { border: 0; border-radius: 999px; padding: 12px 18px; font-weight: 700; background: var(--accent); color: white; cursor: pointer; }
+
+      footer {
+        background: #0e1525;
+        color: #dbe4f8;
+        padding: 34px 0 42px;
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr 1fr 1fr;
+        gap: 20px;
+      }
+      .footer-grid h4 { color: white; margin-bottom: 8px; }
+      .footer-grid a { display: block; margin: 8px 0; color: #b7c2de; }
+      .footer-bottom { border-top: 1px solid rgba(255,255,255,0.15); margin-top: 20px; padding-top: 16px; color: #8fa0c1; font-size: 0.92rem; }
+
+      @media (max-width: 980px) {
+        .hero, .promo-banner, .newsletter { grid-template-columns: 1fr; display: grid; }
+        .card-grid, .brands-row, .feature-grid, .testimonial-grid, .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      }
+
+      @media (max-width: 720px) {
+        .topbar { flex-direction: column; align-items: stretch; }
+        .searchbar { width: 100%; }
+        .top-actions { justify-content: center; flex-wrap: wrap; }
+        .nav-links { justify-content: center; }
+        .card-grid, .brands-row, .feature-grid, .testimonial-grid, .footer-grid { grid-template-columns: 1fr; }
+        .flash-sale { flex-direction: column; align-items: flex-start; }
+        .newsletter form { flex-direction: column; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="announcement">Free shipping on orders over $50 • New arrivals every Friday • 24/7 customer support</div>
+
+    <div class="container">
+      <header class="topbar">
+        <a class="brand" href="#">
+          <span class="brand-mark">A</span>
+          <span>Aura Base</span>
+        </a>
+
+        <label class="searchbar" aria-label="Search products">
+          <input type="text" placeholder="Search for electronics, fashion, home, beauty..." />
+          <button>Search</button>
+        </label>
+
+        <div class="top-actions">
+          <a href="#">👤 Login</a>
+          <a href="#">🛒 Cart (2)</a>
+          <a href="#">♡ Wishlist</a>
+        </div>
+      </header>
+    </div>
+
+    <nav>
+      <div class="container nav-links">
+        <a href="#">Electronics</a>
+        <a href="#">Fashion</a>
+        <a href="#">Home & Living</a>
+        <a href="#">Beauty</a>
+        <a href="#">Sports</a>
+        <a href="#">Gaming</a>
+        <a href="#">Accessories</a>
+        <a href="#">Deals</a>
+      </div>
+    </nav>
+
+    <main class="container">
+      <section class="hero">
+        <div class="hero-card">
+          <div class="hero-card-content">
+            <p style="text-transform: uppercase; letter-spacing: 0.25em; font-size: 0.8rem; opacity: 0.9;">Seasonal spotlight</p>
+            <h1>Discover premium essentials with a modern edge.</h1>
+            <p>Shop curated picks from top brands, enjoy fast delivery, and save on limited-time offers.</p>
+            <div class="btn-row">
+              <a class="btn btn-primary" href="#">Shop Now</a>
+              <a class="btn btn-secondary" href="#">Explore Collections</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <h3>Why shoppers love Aura Base</h3>
+          <div class="offer-list">
+            <div class="offer-item">
+              <strong>Fast nationwide delivery</strong>
+              <div class="meta">Free shipping on orders over $50</div>
+            </div>
+            <div class="offer-item">
+              <strong>Secure payments</strong>
+              <div class="meta">Buy with confidence using trusted gateways</div>
+            </div>
+            <div class="offer-item">
+              <strong>Easy returns</strong>
+              <div class="meta">Hassle-free returns within 30 days</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>Browse by category</h2>
+          <a href="#">View all categories</a>
+        </div>
+        <div class="card-grid">
+          <div class="category-card">
+            <div class="category-icon">📱</div>
+            <h3>Electronics</h3>
+            <p>Smart devices, audio, and gadgets</p>
+          </div>
+          <div class="category-card">
+            <div class="category-icon">👗</div>
+            <h3>Fashion</h3>
+            <p>Trendy staples and seasonal favorites</p>
+          </div>
+          <div class="category-card">
+            <div class="category-icon">🏠</div>
+            <h3>Home & Living</h3>
+            <p>Comfort, style, and essential decor</p>
+          </div>
+          <div class="category-card">
+            <div class="category-icon">💄</div>
+            <h3>Beauty</h3>
+            <p>Skincare, makeup, and wellness picks</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>Featured products</h2>
+          <a href="#">See more</a>
+        </div>
+        <div class="card-grid">
+          <article class="product-card">
+            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=80" alt="Smart watch" />
+            <span class="badge">Top Rated</span>
+            <div class="product-title">Nova Smartwatch Pro</div>
+            <div class="meta">TechCube • 4.8 ★ (1,204 reviews)</div>
+            <div class="price-row">
+              <span class="price">$149</span>
+              <span class="old-price">$199</span>
+              <span class="badge" style="background:#ecfdf3;color:#1f9d72">20% off</span>
+            </div>
+            <div class="stock">In stock</div>
+            <div class="product-actions">
+              <button class="cart">Add to Cart</button>
+              <button class="wish">♡</button>
+            </div>
+          </article>
+          <article class="product-card">
+            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80" alt="Running shoes" />
+            <span class="badge">New Drop</span>
+            <div class="product-title">Aero Runner X</div>
+            <div class="meta">RunLite • 4.7 ★ (876 reviews)</div>
+            <div class="price-row">
+              <span class="price">$98</span>
+              <span class="old-price">$129</span>
+              <span class="badge" style="background:#ecfdf3;color:#1f9d72">24% off</span>
+            </div>
+            <div class="stock">In stock</div>
+            <div class="product-actions">
+              <button class="cart">Buy Now</button>
+              <button class="wish">♡</button>
+            </div>
+          </article>
+          <article class="product-card">
+            <img src="https://images.unsplash.com/photo-1495121605193-b116b5b9c5fe?auto=format&fit=crop&w=900&q=80" alt="Chair" />
+            <span class="badge">Best Seller</span>
+            <div class="product-title">Luma Lounge Chair</div>
+            <div class="meta">NestCo • 4.9 ★ (569 reviews)</div>
+            <div class="price-row">
+              <span class="price">$220</span>
+              <span class="old-price">$280</span>
+              <span class="badge" style="background:#ecfdf3;color:#1f9d72">21% off</span>
+            </div>
+            <div class="stock">Low stock</div>
+            <div class="product-actions">
+              <button class="cart">Add to Cart</button>
+              <button class="wish">♡</button>
+            </div>
+          </article>
+          <article class="product-card">
+            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80" alt="Bag" />
+            <span class="badge">Editor’s Pick</span>
+            <div class="product-title">Velora Tote Bag</div>
+            <div class="meta">LuxeLine • 4.8 ★ (912 reviews)</div>
+            <div class="price-row">
+              <span class="price">$84</span>
+              <span class="old-price">$112</span>
+              <span class="badge" style="background:#ecfdf3;color:#1f9d72">25% off</span>
+            </div>
+            <div class="stock">In stock</div>
+            <div class="product-actions">
+              <button class="cart">Add to Cart</button>
+              <button class="wish">♡</button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="promo-banner">
+        <div class="promo-card">
+          <h3>Flash sale is live now</h3>
+          <p>Score up to 40% off select favorites before the timer ends.</p>
+          <a class="btn" href="#">Grab the deal</a>
+        </div>
+        <div class="flash-sale">
+          <div>
+            <div class="section-head" style="margin: 0; justify-content: flex-start;">
+              <h2 style="font-size: 1.2rem;">Limited-time offer</h2>
+            </div>
+            <div class="meta">Ends in</div>
+          </div>
+          <div class="countdown">
+            <span>02<small>Days</small></span>
+            <span>08<small>Hours</small></span>
+            <span>14<small>Mins</small></span>
+            <span>32<small>Secs</small></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>Trusted brands</h2>
+          <a href="#">See all partners</a>
+        </div>
+        <div class="brands-row">
+          <div class="brand-pill">NOVA</div>
+          <div class="brand-pill">LUXE</div>
+          <div class="brand-pill">NEST</div>
+          <div class="brand-pill">AERO</div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>Why choose Aura Base</h2>
+        </div>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Fast delivery</h3>
+            <p>Quick dispatch and nationwide shipping for every order.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🔒</div>
+            <h3>Secure checkout</h3>
+            <p>Protected payment choices with encrypted transactions.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">↩️</div>
+            <h3>Easy returns</h3>
+            <p>Hassle-free returns and friendly support when you need it.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">⭐</div>
+            <h3>Genuine products</h3>
+            <p>Only verified goods from trusted brands and sellers.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>What our customers say</h2>
+        </div>
+        <div class="testimonial-grid">
+          <div class="testimonial-card">
+            <div class="rating">★★★★★</div>
+            <p>“The shopping experience felt smooth from start to finish. Delivery was fast and the product arrived exactly as described.”</p>
+            <div class="reviewer">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80" alt="Customer" />
+              <div><strong>Mira H.</strong><br /><span class="meta">Verified Buyer</span></div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="rating">★★★★★</div>
+            <p>“Beautiful design, excellent quality, and prices that always feel fair. Aura Base is now my go-to store.”</p>
+            <div class="reviewer">
+              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80" alt="Customer" />
+              <div><strong>David T.</strong><br /><span class="meta">Verified Buyer</span></div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="rating">★★★★★</div>
+            <p>“The selection is amazing and I loved the app-like experience on mobile. Everything felt quick and intuitive.”</p>
+            <div class="reviewer">
+              <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=200&q=80" alt="Customer" />
+              <div><strong>Sophia L.</strong><br /><span class="meta">Verified Buyer</span></div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="rating">★★★★★</div>
+            <p>“Great customer service and amazing promos. I always find something exciting for my home and lifestyle.”</p>
+            <div class="reviewer">
+              <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&q=80" alt="Customer" />
+              <div><strong>James R.</strong><br /><span class="meta">Verified Buyer</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="newsletter">
+        <div>
+          <h2 style="margin: 0 0 6px;">Join the Aura Base newsletter</h2>
+          <p style="margin: 0; color: #dbe4f8;">Get updates on new arrivals, offers, and exclusive deals.</p>
+        </div>
+        <form>
+          <input type="email" placeholder="Enter your email address" />
+          <button type="submit">Subscribe</button>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container footer-grid">
+        <div>
+          <h4>Aura Base</h4>
+          <p>Modern shopping made simple with curated products, trusted brands, and a smooth experience across every device.</p>
+        </div>
+        <div>
+          <h4>Quick links</h4>
+          <a href="#">About us</a>
+          <a href="#">Contact us</a>
+          <a href="#">Privacy policy</a>
+          <a href="#">Terms & conditions</a>
+        </div>
+        <div>
+          <h4>Support</h4>
+          <a href="#">Shipping info</a>
+          <a href="#">Returns</a>
+          <a href="#">FAQ</a>
+          <a href="#">Customer support</a>
+        </div>
+        <div>
+          <h4>Follow us</h4>
+          <a href="#">Instagram</a>
+          <a href="#">Facebook</a>
+          <a href="#">Twitter</a>
+          <a href="#">LinkedIn</a>
+        </div>
+      </div>
+      <div class="container footer-bottom">© <span id="year"></span> Aura Base. All rights reserved.</div>
+    </footer>
+
+    <script>
+      const yearEl = document.getElementById("year");
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
